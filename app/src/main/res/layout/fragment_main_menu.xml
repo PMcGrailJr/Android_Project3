@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_weight="1"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    tools:context=".MainMenuFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="175dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/hiScoreTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/gameScreenMargin"
+            android:layout_weight="1"
+            android:gravity="center|end"
+            android:text="@string/mainMenuHiScoreText"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/primaryTextColor" />
+
+        <TextView
+            android:id="@+id/mainMenuHiScoreText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/gameScreenMargin"
+            android:layout_weight="1"
+            android:text="@string/defaultScore"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/primaryTextColor" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/newGameButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:paddingTop="@dimen/buttonPadding"
+        android:paddingBottom="@dimen/buttonPadding"
+        android:text="@string/newGame"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/primaryTextColor" />
+
+</LinearLayout>

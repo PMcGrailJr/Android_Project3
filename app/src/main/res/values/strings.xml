@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Memory Game</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="newGame">New Game</string>
+    <string name="optionsText">Options</string>
+    <string name="scoreText">Your Score:</string>
+    <string name="defaultScore">0000</string>
+    <string name="hiScoreText">New hi-score!</string>
+    <string name="mainMenuText">Return to Main Menu</string>
+    <string name="defaultQuestionNumber">0</string>
+    <string name="remainingPausesText">Pauses:</string>
+    <string name="defaultPauses">3</string>
+    <string name="defaultGuessTime">3</string>
+    <string name="duckText">Duck</string>
+    <string name="gooseText">Goose</string>
+    <string name="timeRemainingText">Time Remaining:</string>
+    <string name="defaultTime">1:00</string>
+    <string name="gameScreenImageContentDescription">Displays an image of either a duck or goose.</string>
+    <string name="duckGuessArrowContentDescription">An arrow pointing to the left letting the user know to swipe left to guess duck.</string>
+    <string name="gooseArrowContentDescription">An arrow pointing to the right letting the user know to swipe right to guess goose.</string>
+    <string name="mainMenuHiScoreText">Hi-Score:</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+</resources>

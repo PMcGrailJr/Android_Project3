@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="gameScreenMargin">4dp</dimen>
+    <dimen name="gameScreenImagePadding">256dp</dimen>
+    <dimen name="gameScreenImageMargin">96dp</dimen>
+    <dimen name="buttonPadding">32dp</dimen>
+</resources>
