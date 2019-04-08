@@ -1,8 +1,11 @@
 package com.alaplante.project3;
 
+import android.content.res.AssetManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +13,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.Random;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import static android.content.ContentValues.TAG;
 
 
 public class GameScreenFragment extends Fragment {
 
     private long defaultQuizTime, remainingQuizTime;
+    private int numberOfGuesses = 0;
+    private int numberOfMatches = 0;
     private TextView quizTimerText;
     private String timeString, toastText;
     private int flipCardCount = 16;
     private CountDownTimer quizTimer;
+    private Card currentFlippedImage; //if card is already flipped, this stores the image name
     private boolean gameFinished = false;
     private LinearLayout gameScreenContainer;
+    private boolean cardFlipped = false; //determines if first or second card
     final int[] flipCards = {
             0,
             R.id.flipCard1,
@@ -40,6 +53,7 @@ public class GameScreenFragment extends Fragment {
             R.id.flipCard15,
             R.id.flipCard16
     };
+    private Card[] cards = new Card[16];
 
 
     public GameScreenFragment() {
@@ -59,17 +73,27 @@ public class GameScreenFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game_screen, container, false);
         quizTimerText = view.findViewById(R.id.quizTimerText);
         gameScreenContainer = view.findViewById(R.id.gameScreenContainer);
-
+        final AssetManager assets = getActivity().getAssets();
+        String[] imageNames = {"image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8"};
+        String[] imageAssignments =  {"image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8","image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8"};
+        //String[] imageAssignments = new String[2*imageNames.length];
+        randomize(imageNames, imageAssignments);
+        /*for(int i = 0; i<flipCardCount; i++){
+            Log.e(TAG, imageAssignments[i]);
+        }*/
         for (int i = 1; i <= flipCardCount; i++) {
             ImageView flipCard = view.findViewById(flipCards[i]);
             flipCard.setOnClickListener(new View.OnClickListener() {
                public void onClick(View v){
-                   Toast.makeText(getActivity(), "" + v.getResources().getResourceEntryName(v.getId()), Toast.LENGTH_SHORT).show();
+                   flipCard(v);
                }
             });
+            //String[] imageNames = {"image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8"};
+            //String[] imageAssignments =  {"image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8","image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8"};
+            //String[] imageAssignments = new String[2*imageNames.length];
+            //randomize(imageNames, imageAssignments);
+            cards[i-1]= new Card(flipCard, imageAssignments[i-1], flipCards[i], getActivity());
         }
-
-
 
         setQuizTimer("45 seconds");
 
@@ -130,6 +154,76 @@ public class GameScreenFragment extends Fragment {
         ((MainActivity) getActivity()).loadScoreScreen();
     }
 
+    public void flipCard(View v){
+        int clickedCard = -99;
+        for (int j = 0; j < flipCardCount; j++) {
+            if (v.getId() == cards[j].getID()) {
+                clickedCard = j;
+            }
+        }
+        if (cards[clickedCard].isActive()) {
+            cards[clickedCard].DisplayFront();
+            //Toast.makeText(getActivity(), "" + v.getResources().getResourceEntryName(v.getId()), Toast.LENGTH_SHORT).show();
+            if (cardFlipped) {
+                long starttime = System.currentTimeMillis();
+                while(starttime+1000>System.currentTimeMillis()){
 
+                }
+                numberOfGuesses++;
+                if (cards[clickedCard].getImageName() == currentFlippedImage.getImageName()) {
+                    numberOfMatches ++;
+                    Toast.makeText(getActivity(), "Match!", Toast.LENGTH_SHORT).show();
+                    currentFlippedImage.deactivate();
+                    cards[clickedCard].deactivate();
+                }else{
+                    Toast.makeText(getActivity(), "Not a Match", Toast.LENGTH_SHORT).show();
+                    currentFlippedImage.DisplayBack();
+                    cards[clickedCard].DisplayBack();
+                }
+                cardFlipped = false;
+            } else {
+                cardFlipped = true;
+                currentFlippedImage = cards[clickedCard];
+            }
+        }
+    }
+    public int ScoreGame(){
+        double initscore;
+        //(number of matches/number of guesses)+(remaining time/total time)
+        initscore = ((numberOfMatches/numberOfGuesses)+(remainingQuizTime/defaultQuizTime))*100;
+        int finalScore = (int)initscore;
+        return finalScore;
+    }
 
+    public void randomize(String[] images, String[] cardImages){
+        int[] randArray = new int[cardImages.length];
+        Random rand = new Random();
+        //fill array with zeros
+        for(int i=0; i<randArray.length; i++){
+            randArray[i]= 0;
+        }
+        boolean done = false;
+        int numOccurances = 0;
+        int temp = -99;
+        //fill each number of the array
+        for(int i=0; i<randArray.length; i++){
+            done=false;
+            while(!done) {
+                temp = rand.nextInt(8);
+                numOccurances = 0;
+                for (int j = 0; j < i; j++) {
+                    if (temp == randArray[j]) {
+                        numOccurances++;
+                    }
+                }
+                if(numOccurances <  2){
+                    done=true;
+                }
+            }
+            Log.e(TAG, ""+ i+ " "+temp);
+            randArray[i] = temp;
+            cardImages[i]=images[temp];
+        }
+    }
 }
+

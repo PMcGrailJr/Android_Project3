@@ -52,29 +52,29 @@
 
             <ImageView
                 android:id="@+id/flipCard1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageView
                 android:id="@+id/flipCard2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageView
                 android:id="@+id/flipCard3"
-                android:layout_width="87dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageView
                 android:id="@+id/flipCard4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
         </TableRow>
@@ -85,32 +85,32 @@
 
             <ImageView
                 android:id="@+id/flipCard5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 android:src="@drawable/ic_launcher_foreground"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageView
                 android:id="@+id/flipCard6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 android:src="@drawable/ic_launcher_foreground"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageView
                 android:id="@+id/flipCard7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 android:src="@drawable/ic_launcher_foreground"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageView
                 android:id="@+id/flipCard8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 android:src="@drawable/ic_launcher_foreground"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
@@ -122,30 +122,30 @@
 
             <ImageView
                 android:id="@+id/flipCard9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 android:src="@drawable/ic_launcher_foreground"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageView
                 android:id="@+id/flipCard10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageView
                 android:id="@+id/flipCard11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageView
                 android:id="@+id/flipCard12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
         </TableRow>
@@ -156,29 +156,29 @@
 
             <ImageView
                 android:id="@+id/flipCard13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageView
                 android:id="@+id/flipCard14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageView
                 android:id="@+id/flipCard15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageView
                 android:id="@+id/flipCard16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/cardsize"
+                android:layout_height="@dimen/cardsize"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_launcher_foreground" />
         </TableRow>
