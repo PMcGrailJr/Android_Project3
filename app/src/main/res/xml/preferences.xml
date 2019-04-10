@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="pref_extremeMode"
+        android:title="Turn on Extreme Mode"
+        android:summary="Disables initial display of cards"
+        android:persistent="true" />
+
+    <ListPreference
+        android:entries="@array/quiz_length"
+        android:entryValues="@array/quiz_length"
+        android:key="pref_quizLength"
+        android:title="Quiz Length"
+        android:summary="Determine how long quiz will run"
+        android:persistent="true"
+        android:defaultValue="Medium" />
+
+</PreferenceScreen>

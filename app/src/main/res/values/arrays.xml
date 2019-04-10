@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="quiz_length">
+        <item>45 seconds</item>
+        <item>30 seconds</item>
+        <item>15 seconds</item>
+    </string-array>
+</resources>

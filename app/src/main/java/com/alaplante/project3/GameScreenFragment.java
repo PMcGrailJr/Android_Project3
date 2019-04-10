@@ -1,6 +1,7 @@
 package com.alaplante.project3;
 
 import android.content.res.AssetManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -26,11 +27,14 @@ public class GameScreenFragment extends Fragment {
     private int flipCardCount = 16;
     private CountDownTimer quizTimer;
     private CountDownTimer displayTimer;
+    private CountDownTimer flipTimer;
     private Card currentFlippedImage; //if card is already flipped, this stores the image name
     private boolean gameFinished = false;
     private int currentSelection;
     private LinearLayout gameScreenContainer;
     private boolean cardFlipped = false; //determines if first or second card
+    private boolean secondCardFlipped = false;
+    private boolean extremeMode;
     final int[] flipCards = {
             0,
             R.id.flipCard1,
@@ -93,10 +97,19 @@ public class GameScreenFragment extends Fragment {
             cards[i-1]= new Card(flipCard, imageAssignments[i-1], flipCards[i], getActivity());
         }
 
-        setQuizTimer("45 seconds");
+        // load selected game time, set timer
+        String selectedGameTime = ((MainActivity) getActivity()).getQuizLength();
+        setQuizTimer(selectedGameTime);
 
-        // start the quiz timer and load first question
-        startDisplayTimer();
+
+
+        // load extreme mode boolean, make display timer decision
+        extremeMode = ((MainActivity) getActivity()).getExtremeMode();
+        if(!extremeMode) {
+            startDisplayTimer();
+        } else {
+            startQuizTimer();
+        }
 
         // Inflate the layout for this fragment
         return view;
@@ -148,6 +161,27 @@ public class GameScreenFragment extends Fragment {
 
     }
 
+    public void startFlipTimer(final int clickedCard) {
+
+        if (cards[clickedCard].isActive()) cards[clickedCard].DisplayFront();
+
+        flipTimer = new CountDownTimer(250, 250) {
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+
+                checkMatching(clickedCard);
+
+            }
+
+        };
+
+        flipTimer.start();
+    }
+
     // starts quiz timer
     public void startQuizTimer() {
 
@@ -176,9 +210,9 @@ public class GameScreenFragment extends Fragment {
     // reports hi score back to main activity
     public void finishQuiz() {
         gameFinished = true;
-        quizTimer = null;
-        displayTimer = null;
-        //((MainActivity) getActivity()).setScore(calculateScore());
+        quizTimer.cancel();
+        if(!extremeMode) displayTimer.cancel();
+        ((MainActivity) getActivity()).setScore(calculateScore());
         ((MainActivity) getActivity()).loadScoreScreen();
     }
 
@@ -192,8 +226,7 @@ public class GameScreenFragment extends Fragment {
             }
         }
 
-        if (cards[clickedCard].isActive()) cards[clickedCard].DisplayFront();
-        checkMatching(clickedCard);
+        startFlipTimer(clickedCard);
 
         //try { TimeUnit.SECONDS.sleep(1); } catch(Exception e) {}
 
@@ -203,18 +236,24 @@ public class GameScreenFragment extends Fragment {
     public void checkMatching(int clickedCard) {
 
         if (cardFlipped)  {
+            secondCardFlipped = true;
             numberOfGuesses++;
             if (cards[clickedCard].getImageName() == currentFlippedImage.getImageName()) {
                 numberOfMatches ++;
-                Toast.makeText(getActivity(), "Match!", Toast.LENGTH_SHORT).show();
+                MediaPlayer good = MediaPlayer.create(this.getActivity(), R.raw.good);
+                good.start();
+                //Toast.makeText(getActivity(), "Match!", Toast.LENGTH_SHORT).show();
                 currentFlippedImage.deactivate();
                 cards[clickedCard].deactivate();
             } else {
-                Toast.makeText(getActivity(), "Not a Match", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Not a Match", Toast.LENGTH_SHORT).show();
+                MediaPlayer bad = MediaPlayer.create(this.getActivity(), R.raw.bad);
+                bad.start();
                 currentFlippedImage.DisplayBack();
                 cards[clickedCard].DisplayBack();
             }
             cardFlipped = false;
+            secondCardFlipped = false;
         } else {
             cardFlipped = true;
             currentFlippedImage = cards[clickedCard];
@@ -224,7 +263,7 @@ public class GameScreenFragment extends Fragment {
 
     }
 
-    public int ScoreGame(){
+    public int calculateScore(){
         double initscore;
         //(number of matches/number of guesses)+(remaining time/total time)
         initscore = ((numberOfMatches/numberOfGuesses)+(remainingQuizTime/defaultQuizTime))*100;
