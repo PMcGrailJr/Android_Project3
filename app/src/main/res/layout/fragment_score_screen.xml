@@ -39,12 +39,24 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/hiScoreText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/hiScoreText"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/primaryTextColor"
+        android:visibility="invisible" />
+
     <Button
         android:id="@+id/mainMenuButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
         android:background="@color/colorAccent"
         android:paddingTop="@dimen/buttonPadding"
         android:paddingBottom="@dimen/buttonPadding"

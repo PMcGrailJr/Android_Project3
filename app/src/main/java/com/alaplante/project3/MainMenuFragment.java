@@ -21,7 +21,7 @@ public class MainMenuFragment extends Fragment {
 
         final Button newGameButton = view.findViewById(R.id.newGameButton);
         hiScoreText = view.findViewById(R.id.mainMenuHiScoreText);
-       // hiScoreText.setText("" + ((MainActivity) getActivity()).getHiScore());
+        hiScoreText.setText("" + ((MainActivity) getActivity()).getHiScore());
 
         newGameButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){

@@ -30,11 +30,11 @@ public class ScoreScreenFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_score_screen, container, false);
 
-        //hiScoreText = view.findViewById(R.id.hiScoreText);
+        hiScoreText = view.findViewById(R.id.hiScoreText);
         scoreText = view.findViewById(R.id.scoreText);
         score = ((MainActivity) getActivity()).getScore();
         scoreText.setText("" + score);
-        //if (((MainActivity) getActivity()).checkNewHiScore(score) == true) hiScoreText.setVisibility(View.VISIBLE);
+        if (((MainActivity) getActivity()).checkNewHiScore(score) == true) hiScoreText.setVisibility(View.VISIBLE);
 
         final Button mainMenuButton = view.findViewById(R.id.mainMenuButton);
 

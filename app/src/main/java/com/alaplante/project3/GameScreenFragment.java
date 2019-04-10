@@ -76,9 +76,11 @@ public class GameScreenFragment extends Fragment {
         quizTimerText = view.findViewById(R.id.quizTimerText);
         gameScreenContainer = view.findViewById(R.id.gameScreenContainer);
         final AssetManager assets = getActivity().getAssets();
-        String[] imageNames = {"bear", "butterfly", "coyote", "dog", "dolphin", "donkey", "hippo", "ram"};
-        String[] imageAssignments =  {"bear", "butterfly", "coyote", "dog", "dolphin", "donkey", "hippo", "ram", "bear", "butterfly", "coyote", "dog", "dolphin", "donkey", "hippo", "ram"};
+        //String[] imageNames = {"bear", "butterfly", "coyote", "dog", "dolphin", "donkey", "hippo", "ram"};
+        //String[] imageAssignments =  {"bear", "butterfly", "coyote", "dog", "dolphin", "donkey", "hippo", "ram", "bear", "butterfly", "coyote", "dog", "dolphin", "donkey", "hippo", "ram"};
         //String[] imageAssignments = new String[2*imageNames.length];
+        String[] imageNames = {"blackCat1", "hans1", "orangeCat", "puppy1", "puppy2", "whiskey1", "whiskey2", "whiskey3"};
+        String[] imageAssignments = {"blackCat1", "hans1", "orangeCat", "puppy1", "puppy2", "whiskey1", "whiskey2", "whiskey3", "blackCat1", "hans1", "orangeCat", "puppy1", "puppy2", "whiskey1", "whiskey2", "whiskey3"};
         randomize(imageNames, imageAssignments);
         /*for(int i = 0; i<flipCardCount; i++){
             Log.e(TAG, imageAssignments[i]);
@@ -225,12 +227,7 @@ public class GameScreenFragment extends Fragment {
                 clickedCard = j;
             }
         }
-
         startFlipTimer(clickedCard);
-
-        //try { TimeUnit.SECONDS.sleep(1); } catch(Exception e) {}
-
-        //Toast.makeText(getActivity(), "" + v.getResources().getResourceEntryName(v.getId()), Toast.LENGTH_SHORT).show();
     }
 
     public void checkMatching(int clickedCard) {
@@ -266,7 +263,11 @@ public class GameScreenFragment extends Fragment {
     public int calculateScore(){
         double initscore;
         //(number of matches/number of guesses)+(remaining time/total time)
-        initscore = ((numberOfMatches/numberOfGuesses)+(remainingQuizTime/defaultQuizTime))*100;
+        if (numberOfGuesses > 0) {
+            initscore = ((numberOfMatches/numberOfGuesses)+(remainingQuizTime/defaultQuizTime))*100;
+        } else {
+            initscore = 0;
+        }
         int finalScore = (int)initscore;
         return finalScore;
     }

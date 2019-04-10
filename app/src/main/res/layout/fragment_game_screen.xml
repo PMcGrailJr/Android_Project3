@@ -5,7 +5,7 @@
     android:id="@+id/gameScreenContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryTextColor"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     tools:context=".GameScreenFragment">
 
@@ -24,7 +24,7 @@
             android:gravity="end"
             android:text="@string/timeRemainingText"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/secondaryTextColor" />
+            android:textColor="@color/primaryTextColor" />
 
         <TextView
             android:id="@+id/quizTimerText"
@@ -33,7 +33,7 @@
             android:layout_weight="4"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/secondaryTextColor" />
+            android:textColor="@color/primaryTextColor" />
     </LinearLayout>
 
     <TableLayout
@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="579dp"
         android:layout_gravity="center"
-        android:layout_weight="10"
+        android:layout_weight="2"
         android:elevation="30dp"
         android:gravity="center_horizontal|center_vertical">
 
