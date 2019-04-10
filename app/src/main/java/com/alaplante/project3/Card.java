@@ -9,11 +9,14 @@ import android.widget.ImageView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 import static android.app.PendingIntent.getActivity;
 import static android.content.ContentValues.TAG;
 
 public class Card {
+
     private String imageName;
     private boolean matched; //determines if card has been matched already
     private String back = "image0.png";//image name for back of card for when it's flipped back over
@@ -29,11 +32,13 @@ public class Card {
         activity = inputactivity;
         ID = inputID;
         active = true;
-        //AssetManager assets = getActivity(GameScreenFragment).getAssets();
         assets = activity.getAssets();
+        //AssetManager assets = getActivity(GameScreenFragment).getAssets();
+        //DisplayFront();
+        //try { Thread.sleep(3000); } catch(Exception e) {}
         DisplayBack();
         //may display front initially
-        //DisplayFront();
+
     }
         public void DisplayFront(){
             try(InputStream stream =
@@ -43,20 +48,26 @@ public class Card {
             }
             catch(IOException exception){
                 Log.e(TAG,"Error loading image", exception);
+            } finally {
+                //try { Thread.sleep(3000); } catch(Exception e) {}
+               //GameScreenFragment.SIGNAL();
             }
         }
+
         public void DisplayBack () {
             try (InputStream stream =
-                         assets.open("image0.png")) {
+                         assets.open("cardBack.png")) {
                 Drawable card = Drawable.createFromStream(stream, "image0");
                 imageView.setImageDrawable(card);
             } catch (IOException exception) {
                 Log.e(TAG, "Error loading image", exception);
             }
         }
+
         public void activate(){
             active=true;
         }
+
         public void deactivate(){
             active = false;
             try (InputStream stream =
@@ -67,6 +78,7 @@ public class Card {
                 Log.e(TAG, "Error loading image", exception);
             }
         }
+
         public String getImageName () {
             return imageName;
         }
@@ -76,5 +88,6 @@ public class Card {
         public boolean isActive(){
             return active;
         }
+
 
 }

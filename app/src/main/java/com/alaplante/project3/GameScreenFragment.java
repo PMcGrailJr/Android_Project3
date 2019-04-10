@@ -1,7 +1,6 @@
 package com.alaplante.project3;
 
 import android.content.res.AssetManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -14,10 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Random;
-
-import java.io.IOException;
-import java.io.InputStream;
-
 import static android.content.ContentValues.TAG;
 
 
@@ -30,8 +25,10 @@ public class GameScreenFragment extends Fragment {
     private String timeString, toastText;
     private int flipCardCount = 16;
     private CountDownTimer quizTimer;
+    private CountDownTimer displayTimer;
     private Card currentFlippedImage; //if card is already flipped, this stores the image name
     private boolean gameFinished = false;
+    private int currentSelection;
     private LinearLayout gameScreenContainer;
     private boolean cardFlipped = false; //determines if first or second card
     final int[] flipCards = {
@@ -64,6 +61,7 @@ public class GameScreenFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toast.makeText(getActivity(), "New Game", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -74,8 +72,8 @@ public class GameScreenFragment extends Fragment {
         quizTimerText = view.findViewById(R.id.quizTimerText);
         gameScreenContainer = view.findViewById(R.id.gameScreenContainer);
         final AssetManager assets = getActivity().getAssets();
-        String[] imageNames = {"image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8"};
-        String[] imageAssignments =  {"image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8","image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8"};
+        String[] imageNames = {"bear", "butterfly", "coyote", "dog", "dolphin", "donkey", "hippo", "ram"};
+        String[] imageAssignments =  {"bear", "butterfly", "coyote", "dog", "dolphin", "donkey", "hippo", "ram", "bear", "butterfly", "coyote", "dog", "dolphin", "donkey", "hippo", "ram"};
         //String[] imageAssignments = new String[2*imageNames.length];
         randomize(imageNames, imageAssignments);
         /*for(int i = 0; i<flipCardCount; i++){
@@ -98,7 +96,7 @@ public class GameScreenFragment extends Fragment {
         setQuizTimer("45 seconds");
 
         // start the quiz timer and load first question
-        startQuizTimer();
+        startDisplayTimer();
 
         // Inflate the layout for this fragment
         return view;
@@ -119,6 +117,34 @@ public class GameScreenFragment extends Fragment {
         }
 
         remainingQuizTime = defaultQuizTime * 1000;
+
+    }
+
+    public void startDisplayTimer() {
+
+        for (int i = 0; i < flipCardCount; i++) {
+            cards[i].DisplayFront();
+        }
+
+        displayTimer = new CountDownTimer(3000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+
+                for (int i = 0; i < flipCardCount; i++) {
+                    cards[i].DisplayBack();
+                }
+
+                startQuizTimer();
+
+            }
+
+        };
+
+        displayTimer.start();
 
     }
 
@@ -150,43 +176,54 @@ public class GameScreenFragment extends Fragment {
     // reports hi score back to main activity
     public void finishQuiz() {
         gameFinished = true;
+        quizTimer = null;
+        displayTimer = null;
         //((MainActivity) getActivity()).setScore(calculateScore());
         ((MainActivity) getActivity()).loadScoreScreen();
     }
 
-    public void flipCard(View v){
+
+    public void flipCard(View v) {
         int clickedCard = -99;
         for (int j = 0; j < flipCardCount; j++) {
             if (v.getId() == cards[j].getID()) {
+                currentSelection = j;
                 clickedCard = j;
             }
         }
-        if (cards[clickedCard].isActive()) {
-            cards[clickedCard].DisplayFront();
-            //Toast.makeText(getActivity(), "" + v.getResources().getResourceEntryName(v.getId()), Toast.LENGTH_SHORT).show();
-            if (cardFlipped) {
-                long starttime = System.currentTimeMillis();
-                while(starttime+1000>System.currentTimeMillis()){
 
-                }
-                numberOfGuesses++;
-                if (cards[clickedCard].getImageName() == currentFlippedImage.getImageName()) {
-                    numberOfMatches ++;
-                    Toast.makeText(getActivity(), "Match!", Toast.LENGTH_SHORT).show();
-                    currentFlippedImage.deactivate();
-                    cards[clickedCard].deactivate();
-                }else{
-                    Toast.makeText(getActivity(), "Not a Match", Toast.LENGTH_SHORT).show();
-                    currentFlippedImage.DisplayBack();
-                    cards[clickedCard].DisplayBack();
-                }
-                cardFlipped = false;
-            } else {
-                cardFlipped = true;
-                currentFlippedImage = cards[clickedCard];
-            }
-        }
+        if (cards[clickedCard].isActive()) cards[clickedCard].DisplayFront();
+        checkMatching(clickedCard);
+
+        //try { TimeUnit.SECONDS.sleep(1); } catch(Exception e) {}
+
+        //Toast.makeText(getActivity(), "" + v.getResources().getResourceEntryName(v.getId()), Toast.LENGTH_SHORT).show();
     }
+
+    public void checkMatching(int clickedCard) {
+
+        if (cardFlipped)  {
+            numberOfGuesses++;
+            if (cards[clickedCard].getImageName() == currentFlippedImage.getImageName()) {
+                numberOfMatches ++;
+                Toast.makeText(getActivity(), "Match!", Toast.LENGTH_SHORT).show();
+                currentFlippedImage.deactivate();
+                cards[clickedCard].deactivate();
+            } else {
+                Toast.makeText(getActivity(), "Not a Match", Toast.LENGTH_SHORT).show();
+                currentFlippedImage.DisplayBack();
+                cards[clickedCard].DisplayBack();
+            }
+            cardFlipped = false;
+        } else {
+            cardFlipped = true;
+            currentFlippedImage = cards[clickedCard];
+        }
+
+        if (numberOfMatches == 8) finishQuiz();
+
+    }
+
     public int ScoreGame(){
         double initscore;
         //(number of matches/number of guesses)+(remaining time/total time)
@@ -225,5 +262,6 @@ public class GameScreenFragment extends Fragment {
             cardImages[i]=images[temp];
         }
     }
+
 }
 
