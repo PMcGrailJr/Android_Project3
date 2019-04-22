@@ -13,6 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 import static android.content.ContentValues.TAG;
 
@@ -215,6 +220,7 @@ public class GameScreenFragment extends Fragment {
         quizTimer.cancel();
         if(!extremeMode) displayTimer.cancel();
         ((MainActivity) getActivity()).setScore(calculateScore());
+        ((MainActivity) getActivity()).addHiScore(calculateScore(), getCurrentDate());
         ((MainActivity) getActivity()).loadScoreScreen();
     }
 
@@ -301,6 +307,14 @@ public class GameScreenFragment extends Fragment {
             randArray[i] = temp;
             cardImages[i]=images[temp];
         }
+    }
+
+    private String getCurrentDate() {
+        String pattern = "MM/dd/yyyy HH:mm:ss";
+        DateFormat df = new SimpleDateFormat(pattern);
+        Date today = Calendar.getInstance().getTime();
+        String todayAsString = df.format(today);
+        return todayAsString;
     }
 
 }

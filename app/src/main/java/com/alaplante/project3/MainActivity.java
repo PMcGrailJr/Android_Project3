@@ -11,11 +11,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private int hiScore = 0, latestScore = 0;
     public static final String QUIZ_LENGTH = "pref_quizLength";
     public static final String EXTREME_MODE = "pref_extremeMode";
+    public List<String> scores;
+    public List<Integer> scoreValues;
+    public static HiScoresAdapter adapter;
+    private SharedPreferences hiScores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +35,48 @@ public class MainActivity extends AppCompatActivity {
         // set default values in the app's SharedPreferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
+        // get hi-scores from shared preferences
+        hiScores = getSharedPreferences("hiscores", MODE_PRIVATE);
+
+        // stored the saved scores in an ArrayList then sort them
+        scores = new ArrayList<>(hiScores.getAll().keySet());
+        Collections.sort(scores, String.CASE_INSENSITIVE_ORDER);
+
+        int tempScore;
+        scoreValues = new ArrayList<>();
+
+        for (int i = 0; i < scores.size(); i++) {
+
+            tempScore = hiScores.getInt(scores.get(i), 0);
+            scoreValues.add(tempScore);
+
+        }
+
+        Collections.sort(scoreValues);
+        Collections.reverse(scoreValues);
+
+        // create RecyclerView.Adapter to bind tags to the RecyclerView
+        adapter = new HiScoresAdapter(scoreValues);
+
         //use ft to load main menu
         loadMainMenu();
 
+    }
+
+    // add new hi score to file
+    public void addHiScore(int score, String tag) {
+        // get SharedPreference.Editor to store new hi score
+        SharedPreferences.Editor preferencesEditor = hiScores.edit();
+        preferencesEditor.putInt(tag, score); // store current search
+        preferencesEditor.apply(); // store the updated preferences
+
+        if (!scoreValues.contains(score)){
+            scoreValues.add(score);
+            Collections.sort(scoreValues);
+            Collections.reverse(scoreValues);
+            adapter.notifyDataSetChanged();
+
+        }
     }
 
     // show menu if app is running on a phone or a portrait-oriented tablet
@@ -84,6 +131,15 @@ public class MainActivity extends AppCompatActivity {
         ScoreScreenFragment newScoreScreenFragment = new ScoreScreenFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, newScoreScreenFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+
+    }
+
+    public void loadHiScoresScreen(){
+        HiScoresFragment newHiScoresScreenFragment = new HiScoresFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container, newHiScoresScreenFragment);
         ft.addToBackStack(null);
         ft.commit();
 

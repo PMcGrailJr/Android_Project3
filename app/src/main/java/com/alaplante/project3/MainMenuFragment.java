@@ -20,14 +20,22 @@ public class MainMenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
         final Button newGameButton = view.findViewById(R.id.newGameButton);
+        final Button hiScoresButton = view.findViewById(R.id.hiScoresButton);
         hiScoreText = view.findViewById(R.id.mainMenuHiScoreText);
-        hiScoreText.setText("" + ((MainActivity) getActivity()).getHiScore());
+        hiScoreText.setText("" + MainActivity.adapter.getMaxValue());
 
         newGameButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
                 Toast.makeText(getActivity(), "New Game", Toast.LENGTH_SHORT).show();
                 ((MainActivity) getActivity()).loadGameScreen();
+
+            }
+        });
+
+        hiScoresButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                ((MainActivity) getActivity()).loadHiScoresScreen();
 
             }
         });
