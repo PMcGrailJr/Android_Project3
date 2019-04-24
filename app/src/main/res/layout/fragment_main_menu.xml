@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:layout_weight="1"
+    android:layout_weight="0"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
     tools:context=".MainMenuFragment">
@@ -13,7 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="175dp"
+        android:layout_marginTop="75dp"
         android:orientation="horizontal">
 
         <TextView
@@ -45,6 +45,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
+        android:layout_weight="1"
         android:background="@color/colorAccent"
         android:gravity="center"
         android:paddingTop="@dimen/buttonPadding"
@@ -61,11 +62,46 @@
         android:layout_marginLeft="@dimen/fab_margin"
         android:layout_marginTop="16dp"
         android:layout_marginRight="@dimen/fab_margin"
+        android:layout_weight="1"
         android:background="@color/colorAccent"
         android:gravity="center"
         android:paddingTop="@dimen/buttonPadding"
         android:paddingBottom="@dimen/buttonPadding"
         android:text="@string/HiScoreLabel"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/primaryTextColor" />
+
+    <Button
+        android:id="@+id/customizeImagesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:paddingTop="@dimen/buttonPadding"
+        android:paddingBottom="@dimen/buttonPadding"
+        android:text="@string/CustomizeImageLabel"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/primaryTextColor" />
+
+    <Button
+        android:id="@+id/howToButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:paddingTop="@dimen/buttonPadding"
+        android:paddingBottom="@dimen/buttonPadding"
+        android:text="@string/HowToLabel"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/primaryTextColor" />
 

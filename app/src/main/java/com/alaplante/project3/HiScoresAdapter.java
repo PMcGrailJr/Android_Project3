@@ -58,6 +58,12 @@ public class HiScoresAdapter extends RecyclerView.Adapter<HiScoresAdapter.ViewHo
         return scores.size();
     }
 
-    public int getMaxValue() { return Collections.max(scores);}
+    public int getMaxValue() {
+        if (!scores.isEmpty()){
+            return Collections.max(scores);
+        } else {
+            return 0;
+        }
+    }
 
 }

@@ -241,16 +241,52 @@ public class GameScreenFragment extends Fragment {
         if (cardFlipped)  {
             secondCardFlipped = true;
             numberOfGuesses++;
+            Random rand=new Random();
+            int soundID= rand.nextInt()%4;
             if (cards[clickedCard].getImageName() == currentFlippedImage.getImageName()) {
                 numberOfMatches ++;
-                MediaPlayer good = MediaPlayer.create(this.getActivity(), R.raw.good);
+               MediaPlayer good;
+                switch(soundID){
+                    case 0:
+                        good = MediaPlayer.create(this.getActivity(), R.raw.good0);
+                        break;
+                    case 1:
+                        good = MediaPlayer.create(this.getActivity(), R.raw.good1);
+                        break;
+                    case 2:
+                        good = MediaPlayer.create(this.getActivity(), R.raw.good2);
+                        break;
+                    case 3:
+                        good = MediaPlayer.create(this.getActivity(), R.raw.good3);
+                        break;
+                    default:
+                        good = MediaPlayer.create(this.getActivity(), R.raw.good0);
+                        break;
+                }
                 good.start();
                 //Toast.makeText(getActivity(), "Match!", Toast.LENGTH_SHORT).show();
                 currentFlippedImage.deactivate();
                 cards[clickedCard].deactivate();
             } else {
                 //Toast.makeText(getActivity(), "Not a Match", Toast.LENGTH_SHORT).show();
-                MediaPlayer bad = MediaPlayer.create(this.getActivity(), R.raw.bad);
+                MediaPlayer bad; //= MediaPlayer.create(this.getActivity(), R.raw.bad);
+                switch(soundID){
+                    case 0:
+                        bad = MediaPlayer.create(this.getActivity(), R.raw.bad0);
+                        break;
+                    case 1:
+                        bad = MediaPlayer.create(this.getActivity(), R.raw.bad1);
+                        break;
+                    case 2:
+                        bad = MediaPlayer.create(this.getActivity(), R.raw.bad2);
+                        break;
+                    case 3:
+                        bad = MediaPlayer.create(this.getActivity(), R.raw.bad3);
+                        break;
+                    default:
+                        bad = MediaPlayer.create(this.getActivity(), R.raw.bad0);
+                        break;
+                }
                 bad.start();
                 currentFlippedImage.DisplayBack();
                 cards[clickedCard].DisplayBack();
@@ -270,7 +306,8 @@ public class GameScreenFragment extends Fragment {
         double initscore;
         //(number of matches/number of guesses)+(remaining time/total time)
         if (numberOfGuesses > 0) {
-            initscore = ((numberOfMatches/numberOfGuesses)+(remainingQuizTime/defaultQuizTime))*100;
+            initscore = (numberOfMatches/numberOfGuesses)*100;
+            // initscore = ((numberOfMatches/numberOfGuesses)+(remainingQuizTime/defaultQuizTime))*100;
         } else {
             initscore = 0;
         }

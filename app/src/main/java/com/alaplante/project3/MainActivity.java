@@ -144,6 +144,22 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
 
     }
+    public void loadCustomizeImagesScreen(){
+        CustomizeImagesFragment newCustomizeImagesScreenFragment= new CustomizeImagesFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container, newCustomizeImagesScreenFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    public void loadHowToScreen(){
+        HowToFragment newHowToFragment = new HowToFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container, newHowToFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+
+    }
 
     public void setScore(int newScore){
         latestScore = newScore;

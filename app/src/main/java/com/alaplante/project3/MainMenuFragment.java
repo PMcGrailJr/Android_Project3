@@ -21,6 +21,8 @@ public class MainMenuFragment extends Fragment {
 
         final Button newGameButton = view.findViewById(R.id.newGameButton);
         final Button hiScoresButton = view.findViewById(R.id.hiScoresButton);
+        final Button customizeImageButton = view.findViewById(R.id.customizeImagesButton);
+        final Button howToButton = view.findViewById(R.id.howToButton);
         hiScoreText = view.findViewById(R.id.mainMenuHiScoreText);
         hiScoreText.setText("" + MainActivity.adapter.getMaxValue());
 
@@ -39,7 +41,16 @@ public class MainMenuFragment extends Fragment {
 
             }
         });
-
+        customizeImageButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                ((MainActivity) getActivity()).loadCustomizeImagesScreen();
+            }
+        });
+        howToButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                ((MainActivity) getActivity()).loadHowToScreen();
+            }
+        });
         // Inflate the layout for this fragment
         return view;
     }

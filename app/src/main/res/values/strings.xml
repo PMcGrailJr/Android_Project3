@@ -23,4 +23,12 @@
     <string name="mainMenuHiScoreText">Hi-Score:</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="HiScoreLabel">Hi-Scores</string>
+    <string name="CustomizeImageLabel">Customize Cards</string>
+    <string name= "ChangeImageButtonText">Change Image</string>
+    <string name="HowToLabel">How To Play</string>
+    <string name="HowToText1">How To Play:</string>
+    <string name="HowToText2">To start a game, select "New Game". The front of the cards will be displayed for a few moments. Once the cards are flipped back over, select two cards. If they match, they will stay displaying the front. If they do not match, they will flip back over. When the cards are all matched or the timer in the top right runs out, the game will be over and the score will be displayed.</string>
+    <string name="HowToText3">To view the high scores, select "Hi-Scores". They will be displayed in order from highest to lowest. Select the android back button to return to the main menu.</string>
+    <string name="HowToText4">To use custom images, select "Custom Cards". Select "Change Image" for each available image and select the image from the photo gallery.</string>
+    <string name="HowToText5">To change the settings, select the icon of three circles in the top right of the screen. The time can be change and "Extreme Mode" can be activated. In Extreme Mode, the cards do not initially display.</string>
 </resources>
