@@ -1,9 +1,17 @@
 package com.alaplante.project3;
 
+import android.app.Activity;
+import android.app.AppComponentFactory;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -40,54 +48,94 @@ public class Card {
         //may display front initially
 
     }
-        public void DisplayFront(){
-            try(InputStream stream =
-                    assets.open(imageName+".png")){
+
+    public void DisplayFront(){
+
+        String imageExtension = imageName.substring(imageName.length() - 4);
+
+        // if image is default
+        if (imageExtension.equals(".png")) {
+
+            try (InputStream stream =
+                         assets.open(imageName)) {
                 Drawable card = Drawable.createFromStream(stream, imageName);
                 imageView.setImageDrawable(card);
+            } catch (IOException exception) {
+                Log.e(TAG, "Error loading image", exception);
             }
-            catch(IOException exception){
+        // if image is custom
+        } else {
+            // try loading custom images
+            try {
+                Uri uri;
+                uri = Uri.parse(imageName);
+                ContentResolver myCR = activity.getContentResolver();
+                Bitmap yourSelectedImage = MediaStore.Images.Media.getBitmap(myCR, uri);
+                //Bitmap yourSelectedImage = returnBitmap(uri);
+
+                imageView.setImageBitmap(yourSelectedImage);
+            } catch(Exception exception) {
                 Log.e(TAG,"Error loading image", exception);
-            } finally {
-                //try { Thread.sleep(3000); } catch(Exception e) {}
-               //GameScreenFragment.SIGNAL();
             }
         }
+    }
 
-        public void DisplayBack () {
-            try (InputStream stream =
-                         assets.open("cardBack.png")) {
-                Drawable card = Drawable.createFromStream(stream, "image0");
-                imageView.setImageDrawable(card);
-            } catch (IOException exception) {
-                Log.e(TAG, "Error loading image", exception);
-            }
+    public void DisplayBack () {
+        try (InputStream stream =
+                     assets.open("cardBack.png")) {
+            Drawable card = Drawable.createFromStream(stream, "image0");
+            imageView.setImageDrawable(card);
+        } catch (IOException exception) {
+            Log.e(TAG, "Error loading image", exception);
         }
+    }
 
-        public void activate(){
-            active=true;
-        }
+    public void activate(){
+        active=true;
+    }
 
-        public void deactivate(){
-            active = false;
+    public void deactivate(){
+        active = false;
+
+        String imageExtension = imageName.substring(imageName.length() - 4);
+
+        // if image is default
+        if (imageExtension.equals(".png")) {
+
             try (InputStream stream =
-                         assets.open(imageName+".png")){
+                         assets.open(imageName)) {
                 Drawable card = Drawable.createFromStream(stream, imageName);
                 imageView.setImageDrawable(card);
             } catch (IOException exception) {
                 Log.e(TAG, "Error loading image", exception);
             }
+            // if image is custom
+        } else {
+            // try loading custom images
+            try {
+                Uri uri;
+                uri = Uri.parse(imageName);
+                ContentResolver myCR = activity.getContentResolver();
+                Bitmap yourSelectedImage = MediaStore.Images.Media.getBitmap(myCR, uri);
+                //Bitmap yourSelectedImage = returnBitmap(uri);
+
+                imageView.setImageBitmap(yourSelectedImage);
+            } catch (Exception exception) {
+                Log.e(TAG, "Error loading image", exception);
+            }
         }
 
-        public String getImageName () {
-            return imageName;
-        }
-        public int getID(){
-            return ID;
-        }
-        public boolean isActive(){
-            return active;
-        }
+    }
+
+    public String getImageName () {
+        return imageName;
+    }
+    public int getID(){
+        return ID;
+    }
+    public boolean isActive(){
+        return active;
+    }
 
 
 }

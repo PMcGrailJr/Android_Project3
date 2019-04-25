@@ -5,4 +5,5 @@
     <dimen name="gameScreenImageMargin">96dp</dimen>
     <dimen name="buttonPadding">32dp</dimen>
     <dimen name="cardsize">128dp</dimen>
+    <dimen name="borderSpacing">16dp</dimen>
 </resources>

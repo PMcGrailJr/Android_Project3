@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static android.content.ContentValues.TAG;
+
 public class MainMenuFragment extends Fragment {
 
     private TextView hiScoreText;
@@ -51,6 +53,7 @@ public class MainMenuFragment extends Fragment {
                 ((MainActivity) getActivity()).loadHowToScreen();
             }
         });
+
         // Inflate the layout for this fragment
         return view;
     }

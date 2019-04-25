@@ -3,14 +3,18 @@ package com.alaplante.project3;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,8 +26,12 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTREME_MODE = "pref_extremeMode";
     public List<String> scores;
     public List<Integer> scoreValues;
+    public List<String> images;
+    public List<String> imageValues;
     public static HiScoresAdapter adapter;
     private SharedPreferences hiScores;
+    private SharedPreferences appImages;
+    private final String[] defaultImages = {"blackCat1", "hans1", "orangeCat", "puppy1", "puppy2", "whiskey1", "whiskey2", "whiskey3"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +42,30 @@ public class MainActivity extends AppCompatActivity {
 
         // set default values in the app's SharedPreferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
+        // get app images from shared preferences
+        appImages = getSharedPreferences("appimages", MODE_PRIVATE);
+
+        // store the image in an ArrayList
+        images = new ArrayList<>(appImages.getAll().keySet());
+
+        // if the shared preference hasn't been initialize, add all default images
+        if (images.size() < 8) {
+            SharedPreferences.Editor preferencesEditor = appImages.edit();
+            for (int i = 0; i < defaultImages.length; i++) {
+                preferencesEditor.putString("image" + (i+1), defaultImages[i] + ".png");
+            }
+            preferencesEditor.apply();
+        }
+
+        String tempImage;
+        imageValues = new ArrayList<>();
+
+        // get actual image values to call from game screen
+        for (int i = 0; i < images.size(); i++) {
+            tempImage = appImages.getString(images.get(i), "");
+            imageValues.add(tempImage);
+        }
 
         // get hi-scores from shared preferences
         hiScores = getSharedPreferences("hiscores", MODE_PRIVATE);
@@ -193,4 +225,6 @@ public class MainActivity extends AppCompatActivity {
         Boolean extremeMode = sharedPreferences.getBoolean(EXTREME_MODE, true);
         return extremeMode;
     }
+    
+
 }

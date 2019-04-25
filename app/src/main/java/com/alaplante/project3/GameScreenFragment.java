@@ -1,5 +1,6 @@
 package com.alaplante.project3;
 
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -16,10 +17,14 @@ import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class GameScreenFragment extends Fragment {
@@ -40,6 +45,8 @@ public class GameScreenFragment extends Fragment {
     private boolean cardFlipped = false; //determines if first or second card
     private boolean secondCardFlipped = false;
     private boolean extremeMode;
+    public List<String> images;
+    public List<String> imageValues;
     final int[] flipCards = {
             0,
             R.id.flipCard1,
@@ -77,19 +84,30 @@ public class GameScreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         super.onCreateView(inflater, container, savedInstanceState);
+
         View view = inflater.inflate(R.layout.fragment_game_screen, container, false);
         quizTimerText = view.findViewById(R.id.quizTimerText);
         gameScreenContainer = view.findViewById(R.id.gameScreenContainer);
         final AssetManager assets = getActivity().getAssets();
-        //String[] imageNames = {"bear", "butterfly", "coyote", "dog", "dolphin", "donkey", "hippo", "ram"};
-        //String[] imageAssignments =  {"bear", "butterfly", "coyote", "dog", "dolphin", "donkey", "hippo", "ram", "bear", "butterfly", "coyote", "dog", "dolphin", "donkey", "hippo", "ram"};
-        //String[] imageAssignments = new String[2*imageNames.length];
-        String[] imageNames = {"blackCat1", "hans1", "orangeCat", "puppy1", "puppy2", "whiskey1", "whiskey2", "whiskey3"};
-        String[] imageAssignments = {"blackCat1", "hans1", "orangeCat", "puppy1", "puppy2", "whiskey1", "whiskey2", "whiskey3", "blackCat1", "hans1", "orangeCat", "puppy1", "puppy2", "whiskey1", "whiskey2", "whiskey3"};
-        randomize(imageNames, imageAssignments);
-        /*for(int i = 0; i<flipCardCount; i++){
-            Log.e(TAG, imageAssignments[i]);
-        }*/
+
+        // get app images from shared preferences
+        SharedPreferences appImages = getActivity().getSharedPreferences("appimages", MODE_PRIVATE);
+
+        // store the image in an ArrayList
+        images = new ArrayList<>(appImages.getAll().keySet());
+
+        String tempImage;
+        imageValues = new ArrayList<>();
+
+        // get actual image values to call from game screen
+        for (int i = 0; i < images.size(); i++) {
+            tempImage = appImages.getString(images.get(i), "");
+            imageValues.add(tempImage);
+            imageValues.add(tempImage);
+        }
+
+        Collections.shuffle(imageValues);
+
         for (int i = 1; i <= flipCardCount; i++) {
             ImageView flipCard = view.findViewById(flipCards[i]);
             flipCard.setOnClickListener(new View.OnClickListener() {
@@ -97,11 +115,7 @@ public class GameScreenFragment extends Fragment {
                    flipCard(v);
                }
             });
-            //String[] imageNames = {"image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8"};
-            //String[] imageAssignments =  {"image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8","image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8"};
-            //String[] imageAssignments = new String[2*imageNames.length];
-            //randomize(imageNames, imageAssignments);
-            cards[i-1]= new Card(flipCard, imageAssignments[i-1], flipCards[i], getActivity());
+            cards[i-1]= new Card(flipCard, imageValues.get(i-1), flipCards[i], getActivity());
         }
 
         // load selected game time, set timer
@@ -246,7 +260,7 @@ public class GameScreenFragment extends Fragment {
             if (cards[clickedCard].getImageName() == currentFlippedImage.getImageName()) {
                 numberOfMatches ++;
                MediaPlayer good;
-                switch(soundID){
+               switch(soundID){
                     case 0:
                         good = MediaPlayer.create(this.getActivity(), R.raw.good0);
                         break;
@@ -263,7 +277,7 @@ public class GameScreenFragment extends Fragment {
                         good = MediaPlayer.create(this.getActivity(), R.raw.good0);
                         break;
                 }
-                good.start();
+                good.start();*/
                 //Toast.makeText(getActivity(), "Match!", Toast.LENGTH_SHORT).show();
                 currentFlippedImage.deactivate();
                 cards[clickedCard].deactivate();
@@ -287,7 +301,7 @@ public class GameScreenFragment extends Fragment {
                         bad = MediaPlayer.create(this.getActivity(), R.raw.bad0);
                         break;
                 }
-                bad.start();
+                bad.start();*/
                 currentFlippedImage.DisplayBack();
                 cards[clickedCard].DisplayBack();
             }
