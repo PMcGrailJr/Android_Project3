@@ -277,7 +277,7 @@ public class GameScreenFragment extends Fragment {
                         good = MediaPlayer.create(this.getActivity(), R.raw.good0);
                         break;
                 }
-                good.start();*/
+                good.start();
                 //Toast.makeText(getActivity(), "Match!", Toast.LENGTH_SHORT).show();
                 currentFlippedImage.deactivate();
                 cards[clickedCard].deactivate();
@@ -301,7 +301,7 @@ public class GameScreenFragment extends Fragment {
                         bad = MediaPlayer.create(this.getActivity(), R.raw.bad0);
                         break;
                 }
-                bad.start();*/
+                bad.start();
                 currentFlippedImage.DisplayBack();
                 cards[clickedCard].DisplayBack();
             }
@@ -317,10 +317,11 @@ public class GameScreenFragment extends Fragment {
     }
 
     public int calculateScore(){
-        double initscore;
+        float initscore;
         //(number of matches/number of guesses)+(remaining time/total time)
         if (numberOfGuesses > 0) {
-            initscore = (numberOfMatches/numberOfGuesses)*100;
+            initscore = (numberOfMatches *100 / numberOfGuesses *100);
+            initscore = (int) initscore;
             // initscore = ((numberOfMatches/numberOfGuesses)+(remainingQuizTime/defaultQuizTime))*100;
         } else {
             initscore = 0;

@@ -225,6 +225,6 @@ public class MainActivity extends AppCompatActivity {
         Boolean extremeMode = sharedPreferences.getBoolean(EXTREME_MODE, true);
         return extremeMode;
     }
-    
+
 
 }
