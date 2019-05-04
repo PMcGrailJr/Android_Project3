@@ -34,7 +34,7 @@ public class ScoreScreenFragment extends Fragment {
         scoreText = view.findViewById(R.id.scoreText);
         score = ((MainActivity) getActivity()).getScore();
         scoreText.setText("" + score);
-        if (((MainActivity) getActivity()).checkNewHiScore(score) == true) hiScoreText.setVisibility(View.VISIBLE);
+        //if (((MainActivity) getActivity()).checkNewHiScore(score) == true) hiScoreText.setVisibility(View.VISIBLE);
 
         final Button mainMenuButton = view.findViewById(R.id.mainMenuButton);
 
